@@ -14,7 +14,13 @@ public class Game extends Canvas implements Runnable {
 
     private BufferedImage image;
 
+    private Spritesheet sheet;
+    private BufferedImage player;
+    private int x = 0;
+
     public Game(){
+        sheet = new Spritesheet("/spritesheet.png");
+        player = sheet.getSprite(0, 0, 16,16);
         setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
         initFrame();
         image = new BufferedImage(160,120, BufferedImage.TYPE_INT_ARGB);
@@ -51,7 +57,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void tick(){
-
+        x++;
     }
     public void render(){
         BufferStrategy bs = this.getBufferStrategy();
@@ -63,8 +69,15 @@ public class Game extends Canvas implements Runnable {
         g.setColor(new Color(250,216,168));
         g.fillRect(0,0,WIDTH,HEIGHT);
 
-        g.setColor(Color.CYAN);
-        g.fillRect(20,20,20,20);
+//        g.setColor(Color.GREEN);
+//        g.fillRect(20,20,20,20);
+//        g.setFont(new Font("Arial", Font.BOLD, 10));
+//        g.setColor(Color.red);
+//        g.drawString("Olá mundo", 90, 90);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.rotate(Math.toRadians(90), 90, 90);
+        g.drawImage(player, x,20,null);
+        g.dispose();
         g = bs.getDrawGraphics();
         g.drawImage(image, 0 ,0, WIDTH*SCALE, HEIGHT*SCALE, null);
         bs.show();
